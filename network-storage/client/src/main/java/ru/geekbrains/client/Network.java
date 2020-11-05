@@ -8,6 +8,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.CountDownLatch;
@@ -18,6 +20,8 @@ public class Network {
     }
 
     private static final Network network = new Network();
+
+    private static final Logger logger = LogManager.getLogger(Client.class);
 
     public static Network getInstance() {
         return network;
@@ -52,6 +56,7 @@ public class Network {
             try {
                 clientGroup.shutdownGracefully().sync();
             } catch (InterruptedException e) {
+                logger.error("Connection closing failure - " + e.getMessage());
                 e.printStackTrace();
             }
         }

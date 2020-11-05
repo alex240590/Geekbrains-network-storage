@@ -7,14 +7,19 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Server {
+
+    private static final Logger logger = LogManager.getLogger(Server.class);
 
     public void run() throws Exception {
 
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
+            logger.info("Server started");
             ServerBootstrap bootsTrap = new ServerBootstrap();
             bootsTrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
